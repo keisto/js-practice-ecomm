@@ -1,20 +1,22 @@
 const { validationResult } = require('express-validator')
 
 module.exports = {
-  handleErrors(templateFunc) {
-    return (req, res, next) => {
+  handleErrors(templateFunc, dataCb) {
+    return async (req, res, next) => {
       const errors = validationResult(req)
-
-      console.log(errors)
       if (!errors.isEmpty()) {
-        return res.send(templateFunc({ errors }))
+        let data = {}
+        if (dataCb) {
+          data = await dataCb(req)
+        }
+        return res.send(templateFunc({ errors, ...data }))
       }
 
       next()
     }
   },
   requireAuth(req, res, next) {
-    if (!res.session?.userId) {
+    if (!req.session.userId) {
       return res.redirect('/signin')
     }
 
