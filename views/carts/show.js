@@ -1,7 +1,6 @@
 const layout = require('../layout')
 
 module.exports = ({ items }) => {
-  console.log(items)
   const totalPrice = items.reduce(
     (acc, item) => acc + item.product.price * item.quantity,
     0
@@ -19,7 +18,8 @@ module.exports = ({ items }) => {
               $${item.product.price * item.quantity}
             </div>
             <div class="remove">
-              <form method="POST">
+              <form method="POST" action="/cart/products/delete">
+                <input hidden value="${item.id}" name="itemId" />
                 <button class="button is-danger">                  
                   <span class="icon is-small">
                     <i class="fas fa-times"></i>
