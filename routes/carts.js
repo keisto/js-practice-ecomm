@@ -1,7 +1,7 @@
 const express = require('express')
 const cartsRepo = require('../repositories/carts')
 const productsRepo = require('../repositories/products')
-const cartsShowTemplate = require('../views/carts/show')
+const cartShowTemplate = require('../views/carts/show')
 
 const router = express.Router()
 
@@ -41,6 +41,6 @@ router.get('/cart', async (req, res) => {
     item.product = product
   }
 
-  res.send(cartsShowTemplate({ items: cart.items }))
+  res.send(cartShowTemplate({ items: cart.items }))
 })
 module.exports = router
