@@ -1,8 +1,13 @@
-const layout = require('../layout');
+const layout = require('../layout')
 
 module.exports = ({ items }) => {
+  console.log(items)
+  const totalPrice = items.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+  )
   const renderedItems = items
-    .map(item => {
+    .map((item) => {
       return `
         <div class="cart-item message">
           <h3 class="subtitle">${item.product.title}</h3>
@@ -24,9 +29,9 @@ module.exports = ({ items }) => {
             </div>
           </div>
         </div>
-      `;
+      `
     })
-    .join('');
+    .join('')
 
   return layout({
     content: `
@@ -42,13 +47,13 @@ module.exports = ({ items }) => {
               <div class="message-header">
                 Total
               </div>
-              <h1 class="title">$</h1>
+              <h1 class="title">${totalPrice}</h1>
               <button class="button is-primary">Buy</button>
             </div>
           </div>
           <div class="column"></div>
         </div>
       </div>
-    `
-  });
-};
+    `,
+  })
+}
